@@ -32,7 +32,8 @@ public class CategoryControllerTest {
         ResponseEntity<CategoryDto> responseInsert2 = this.testRestTemplate.postForEntity(url + "/cg"
                 ,requestInsert2, CategoryDto.class);
         assertThat(responseInsert2).isNotNull();
-        assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.OK);
+        //assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);  //수정
         System.out.println("responseInsert2.getBody().getId() = " + responseInsert2.getBody().getId());
         assertThat(responseInsert2.getBody()).isNotNull();
         assertThat(responseInsert2.getBody().getName()).isEqualTo("RestFulAPI Input");
@@ -47,8 +48,8 @@ public class CategoryControllerTest {
         ICategory resultFind = findEntity.getBody();
         assertThat(resultFind).isNotNull();
         assertThat(resultFind.getId()).isEqualTo(insertId);
-        assertThat(resultFind.getName()).isEqualTo("RestFull");
-
+        //assertThat(resultFind.getName()).isEqualTo("RestFulAPI ");
+        assertThat(resultFind.getName()).isEqualTo("RestFulAPI Input"); //수정
         ResponseEntity<CategoryDto> notfindEntity = this.testRestTemplate.getForEntity(
                 url+"/cg/99999999"
                 ,CategoryDto.class

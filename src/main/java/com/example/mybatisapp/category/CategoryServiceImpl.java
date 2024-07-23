@@ -13,7 +13,9 @@ public class CategoryServiceImpl implements ICategoryService{
 
     @Override
     public ICategory findById(Long id) {
-
+        if (id == null || id <= 0) {
+            return null;
+        }
         CategoryDto dto = this.categoryMybatisMapper.findById(id);
         return dto;
     }
