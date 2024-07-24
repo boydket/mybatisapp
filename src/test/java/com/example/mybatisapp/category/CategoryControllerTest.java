@@ -32,8 +32,8 @@ public class CategoryControllerTest {
         ResponseEntity<CategoryDto> responseInsert2 = this.testRestTemplate.postForEntity(url + "/cg"
                 ,requestInsert2, CategoryDto.class);
         assertThat(responseInsert2).isNotNull();
-        //assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);  //수정
+        assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.OK);
+        //assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);  //수정
         System.out.println("responseInsert2.getBody().getId() = " + responseInsert2.getBody().getId());
         assertThat(responseInsert2.getBody()).isNotNull();
         assertThat(responseInsert2.getBody().getName()).isEqualTo("RestFulAPI Input");

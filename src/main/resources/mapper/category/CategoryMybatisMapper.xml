@@ -33,5 +33,22 @@
         WHERE ID = #{id}
     </select>
 
+    <select id="findByName" resultType="CategoryDto">
+            SELECT id
+                , name
+            FROM category_tbl
+            WHERE name = #{name}
+    </select>
 
+    <select id="findAll" resultType="CategoryDto">
+        SELECT id
+            , name
+        FROM category_tbl
+    </select>
+
+    <select id="findAllByNameContains" resultType="CategoryDto">
+        SELECT id
+            , name
+        FROM category_tbl
+    </select>
 </mapper>
