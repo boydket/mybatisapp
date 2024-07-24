@@ -11,7 +11,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/cg")
+@RequestMapping("/ct")
 public class CategoryController {
     private static Logger logger = LoggerFactory.getLogger(CategoryController.class);
 

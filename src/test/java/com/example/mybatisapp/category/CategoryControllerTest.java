@@ -23,13 +23,13 @@ public class CategoryControllerTest {
     public void CategoryTest() {
         String url = "http://localhost:" + port;
         CategoryDto requestInsert = CategoryDto.builder().build();
-        ResponseEntity<CategoryDto> responseInsert = this.testRestTemplate.postForEntity(url + "/cg"
+        ResponseEntity<CategoryDto> responseInsert = this.testRestTemplate.postForEntity(url + "/ct"
                 ,requestInsert, CategoryDto.class);
         assertThat(responseInsert).isNotNull();
         assertThat(responseInsert.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 
         CategoryDto requestInsert2 = CategoryDto.builder().name("RestFulAPI Input").build();
-        ResponseEntity<CategoryDto> responseInsert2 = this.testRestTemplate.postForEntity(url + "/cg"
+        ResponseEntity<CategoryDto> responseInsert2 = this.testRestTemplate.postForEntity(url + "/ct"
                 ,requestInsert2, CategoryDto.class);
         assertThat(responseInsert2).isNotNull();
         assertThat(responseInsert2.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -40,7 +40,7 @@ public class CategoryControllerTest {
 
         // Category Find Test
         Long insertId = responseInsert2.getBody().getId();
-        ResponseEntity<CategoryDto> findEntity = this.testRestTemplate.getForEntity(url+"/cg/"+insertId.toString()
+        ResponseEntity<CategoryDto> findEntity = this.testRestTemplate.getForEntity(url+"/ct/"+insertId.toString()
                 , CategoryDto.class);
         assertThat(findEntity).isNotNull();
         assertThat(findEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -48,10 +48,10 @@ public class CategoryControllerTest {
         ICategory resultFind = findEntity.getBody();
         assertThat(resultFind).isNotNull();
         assertThat(resultFind.getId()).isEqualTo(insertId);
-        //assertThat(resultFind.getName()).isEqualTo("RestFulAPI ");
-        assertThat(resultFind.getName()).isEqualTo("RestFulAPI Input"); //수정
+        assertThat(resultFind.getName()).isEqualTo("RestFulAPI Input");
+        //assertThat(resultFind.getName()).isEqualTo("RestFulAPI Input"); //수정
         ResponseEntity<CategoryDto> notfindEntity = this.testRestTemplate.getForEntity(
-                url+"/cg/99999999"
+                url+"/ct/99999999"
                 ,CategoryDto.class
         );
         assertThat(notfindEntity).isNotNull();
@@ -61,7 +61,7 @@ public class CategoryControllerTest {
         ICategory update = CategoryDto.builder().build();
         update.copyFields(resultFind);
         update.setName("NoRest");
-        CategoryDto resultObject = this.testRestTemplate.patchForObject(url + "/cg/" + update.getId()
+        CategoryDto resultObject = this.testRestTemplate.patchForObject(url + "/ct/" + update.getId()
                 , update
                 , CategoryDto.class
         );
@@ -70,10 +70,10 @@ public class CategoryControllerTest {
 
         //Category Delete Test
         ICategory delete = CategoryDto.builder().id(update.getId()).build();
-        this.testRestTemplate.delete(url+"/cg/"+delete.getId());
+        this.testRestTemplate.delete(url+"/ct/"+delete.getId());
 
         ResponseEntity<CategoryDto> deleteEntity = this.testRestTemplate.getForEntity(
-                url+"/cg/"+delete.getId()
+                url+"/ct/"+delete.getId()
                         ,CategoryDto.class);
         assertThat(deleteEntity).isNotNull();
         assertThat(deleteEntity.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
