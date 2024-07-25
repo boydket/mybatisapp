@@ -13,13 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/ct")
 public class CategoryController {
-    private static Logger logger = LoggerFactory.getLogger(CategoryController.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
     @Autowired
     private CategoryServiceImpl categoryService;
 
     @PostMapping
-    public ResponseEntity<ICategory> insertCG(@RequestBody CategoryDto dto) {
+    public ResponseEntity<ICategory> insert(@RequestBody CategoryDto dto) {
         try {
             if ( dto == null ) {
                 return ResponseEntity.badRequest().build();
@@ -52,7 +52,7 @@ public class CategoryController {
             if ( id == null ) {
                 return ResponseEntity.badRequest().build();
             }
-            Boolean result = this.categoryService.remove(id);
+            Boolean result = this.categoryService.delete(id);
             return ResponseEntity.ok(result);
         } catch ( Exception ex ) {
             logger.error(ex.toString());
@@ -100,7 +100,9 @@ public class CategoryController {
             if ( name == null || name.isEmpty() ) {
                 return ResponseEntity.badRequest().build();
             }
-            List<ICategory> result = this.categoryService.findAllByNameContains(name);
+            SearchCategoryDto searchCategoryDto = SearchCategoryDto.builder()
+                    .name(name).page(1).build();
+            List<ICategory> result = this.categoryService.findAllByNameContains(searchCategoryDto);
             if ( result == null || result.size() <= 0 ) {
                 return ResponseEntity.notFound().build();
             }
