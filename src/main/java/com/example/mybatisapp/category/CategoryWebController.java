@@ -30,6 +30,8 @@ public class CategoryWebController {
 //            List<ICategory> allList = this.categoryService.getAllList();
             SearchCategoryDto searchCategoryDto = SearchCategoryDto.builder()
                     .name(name).page(page).build();
+            int count = this.categoryService.countAllByNameContains(searchCategoryDto);
+            searchCategoryDto.setTotal(count);
             List<ICategory> allList = this.categoryService.findAllByNameContains(searchCategoryDto);
             model.addAttribute("allList", allList);
             model.addAttribute("searchCategoryDto", searchCategoryDto);
@@ -41,6 +43,9 @@ public class CategoryWebController {
         return "oldhtml/category_old";
     }
 
+    private String getHtmlPageString(SearchCategoryDto searchCategoryDto) {
+        StringBuilder sResult = new StringBuilder();
+    }
     @PostMapping("/oldhtml/category_old_act")
     public String categoryOldInsert(@ModelAttribute CategoryDto dto, Model model) {
         try {
